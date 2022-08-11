@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:water/Additionally/Date.dart';
 import 'package:water/Additionally/WaterList.dart';
 import 'package:water/Additionally/Weight.dart';
 import 'package:water/widgets/WaterDialog.dart';
@@ -17,11 +18,18 @@ class WaterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WaterList.cells(Weight.selectedWeight);
+    final Date date = Date();
     final HomeBloc waterBloc = context.read<HomeBloc>();
-    waterBloc.add(WaterScreenLoadEvent());
+    WaterList.cells(Weight.selectedWeight);
     return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
       if (WaterList.waterSlots.isNotEmpty) {
+        date.readDay();
+        if(date.day != date.now.day){
+          waterBloc.add(WaterScreenAddEvent());
+        }
+        WaterList.waterSlots.isNotEmpty ? WaterList.appbarWater =
+        'Осталось выпить = ${WaterList.sum} / ${WaterList.maxWater}'
+            : WaterList.appbarWater = 'Вы всё выпили!';
         return Scaffold(
           backgroundColor: ColorsForApp.backgroundColor,
           appBar: AppBar(
@@ -62,6 +70,10 @@ class WaterScreen extends StatelessWidget {
         );
       }
       else{
+        date.readDay();
+        if(date.day != date.now.day){
+          waterBloc.add(WaterScreenAddEvent());
+        }
         return Scaffold(
           backgroundColor: ColorsForApp.backgroundColor,
           appBar: AppBar(

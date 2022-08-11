@@ -11,20 +11,10 @@ import '../Additionally/WaterList.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc(initialState) : super(WaterScreenState()) {
     int currentTab = 1;
-    bool openApp = false;
     Date date = Date();
 
     ///
 
-    void _incrementTheme() async {
-      final prefs = await SharedPreferences.getInstance();
-      ColorsForApp.theme = (prefs.setBool('theme', ColorsForApp.theme)) as bool;
-    }
-
-    void _readTheme() async {
-      final prefs = await SharedPreferences.getInstance();
-      ColorsForApp.theme = (prefs.getBool('theme'))!;
-    }
 
     ///
 
@@ -32,7 +22,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       Weight.readWeight();
       WaterList.cells(Weight.selectedWeight);
       WaterList.fillingList();
-      WaterList.incrementWater();
       date.incrementDay();
       WaterList.appbarWater =
       'Осталось выпить = ${WaterList.sum} / ${WaterList.maxWater}';
@@ -42,22 +31,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       WaterList.readWater();
       WaterList.cells(Weight.selectedWeight);
       WaterList.calculateAppbar();
-      WaterList.waterSlots.isNotEmpty ? WaterList.appbarWater =
-      'Осталось выпить = ${WaterList.sum} / ${WaterList.maxWater}'
-          : WaterList.appbarWater = 'Вы всё выпили!';
+      ColorsForApp.readTheme();
 
-      _readTheme();
       ColorsForApp.theme == false ? ColorsForApp.changeColorsOnDayTheme() :
           ColorsForApp.changeColorsOnNightTheme();
-
-      date.readDay();
-      if(date.day != date.now.day){
-        WaterList.fillingList();
-        WaterList.incrementWater();
-        date.incrementDay();
-        WaterList.appbarWater =
-        'Осталось выпить = ${WaterList.sum} / ${WaterList.maxWater}';
-      }
 
       emit(WaterScreenState());
     });
@@ -77,7 +54,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     ///
 
     on<SettingsLoadEvent>((event, emit) async {
-      _readTheme();
       Weight.readWeight();
       emit(SettingsScreenState());
     });
@@ -86,7 +62,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       ColorsForApp.backgroundColor == ColorsForApp.backgroundColorDay
           ? {ColorsForApp.changeColorsOnNightTheme()}
           : {ColorsForApp.changeColorsOnDayTheme()};
-      _incrementTheme();
       emit(SettingsScreenState());
     });
 

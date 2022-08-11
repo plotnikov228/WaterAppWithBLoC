@@ -29,6 +29,8 @@ class WaterList {
     for (int i = 0; i < numberOfCells; i++) {
       waterSlots.add(waterSlotStr);
     }
+
+    incrementWater();
   }
 
   static void fixingSum() {

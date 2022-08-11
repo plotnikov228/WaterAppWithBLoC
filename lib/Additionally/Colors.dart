@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ColorsForApp {
   static Color backgroundColor = Colors.white;
@@ -30,5 +31,15 @@ class ColorsForApp {
     appbarBackgroundColor = appbarBackgroundColorDay;
     objectColor = objectColorDay;
     secondObjectColor = secondObjectColorDay;
+  }
+
+  static void incrementTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    theme = (prefs.setBool('theme', ColorsForApp.theme)) as bool;
+  }
+
+  static void readTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    theme = (prefs.getBool('theme'))!;
   }
 }
