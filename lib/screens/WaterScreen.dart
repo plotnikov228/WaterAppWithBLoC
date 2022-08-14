@@ -27,9 +27,6 @@ class WaterScreen extends StatelessWidget {
         if(date.day != date.now.day){
           waterBloc.add(WaterScreenAddEvent());
         }
-        WaterList.waterSlots.isNotEmpty ? WaterList.appbarWater =
-        'Осталось выпить = ${WaterList.sum} / ${WaterList.maxWater}'
-            : WaterList.appbarWater = 'Вы всё выпили!';
         return Scaffold(
           backgroundColor: ColorsForApp.backgroundColor,
           appBar: AppBar(

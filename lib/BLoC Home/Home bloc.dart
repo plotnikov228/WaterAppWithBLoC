@@ -22,20 +22,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       Weight.readWeight();
       WaterList.cells(Weight.selectedWeight);
       WaterList.fillingList();
+      WaterList.calculateAppbar();
       date.incrementDay();
       WaterList.appbarWater =
       'Осталось выпить = ${WaterList.sum} / ${WaterList.maxWater}';
     });
 
     on<WaterScreenLoadEvent>((event, emit) async {
-      WaterList.readWater();
       WaterList.cells(Weight.selectedWeight);
+      WaterList.readWater();
       WaterList.calculateAppbar();
-      ColorsForApp.readTheme();
-
-      ColorsForApp.theme == false ? ColorsForApp.changeColorsOnDayTheme() :
-          ColorsForApp.changeColorsOnNightTheme();
-
       emit(WaterScreenState());
     });
 
@@ -55,13 +51,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     on<SettingsLoadEvent>((event, emit) async {
       Weight.readWeight();
-      emit(SettingsScreenState());
-    });
-
-    on<SettingsThemeChangeEvent>((event, emit) async {
-      ColorsForApp.backgroundColor == ColorsForApp.backgroundColorDay
-          ? {ColorsForApp.changeColorsOnNightTheme()}
-          : {ColorsForApp.changeColorsOnDayTheme()};
       emit(SettingsScreenState());
     });
 

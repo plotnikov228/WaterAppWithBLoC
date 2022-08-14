@@ -25,26 +25,6 @@ class Settings extends StatelessWidget {
         body: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Тёмная тема',
-                      style: TextStyle(
-                          color: ColorsForApp.objectColor, fontSize: 15)),
-                  Switch(
-                      value: ColorsForApp.theme,
-                      inactiveThumbColor: Colors.white,
-                      inactiveTrackColor: ColorsForApp.objectColorDay,
-                      activeColor: Colors.white,
-                      onChanged: (value) {
-                        ColorsForApp.theme = value;
-                        settingsBloc.add(SettingsThemeChangeEvent());
-                      }),
-                ],
-              ),
-            ),
-            Padding(
                 padding: const EdgeInsets.all(16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -20,6 +20,12 @@ class WaterList {
     }
     fixingSum();
     fixingMaxWater();
+    if (sum != 0) {
+      appbarWater =
+          'Осталось выпить = $sum / $maxWater';
+    } else {
+      appbarWater = 'Вы всё выпили!';
+    }
   }
 
   static void fillingList() {
@@ -64,7 +70,6 @@ class WaterList {
     if (maxWater == 2.1999999999999997) maxWater = 2.2;
   }
 
-
   static void cells(int weight) {
     double liters;
     numberOfCells = 0;
@@ -74,10 +79,11 @@ class WaterList {
       numberOfCells++;
     }
   }
+
   static void incrementWater() async {
     final prefs = await SharedPreferences.getInstance();
     WaterList.waterSlots =
-    (prefs.setStringList('slot', WaterList.waterSlots)) as List<String>;
+        (prefs.setStringList('slot', WaterList.waterSlots)) as List<String>;
   }
 
   static void readWater() async {

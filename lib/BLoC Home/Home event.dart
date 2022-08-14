@@ -8,5 +8,4 @@ class WaterScreenAddEvent extends HomeEvent {}
 class WaterScreenDeleteEvent extends HomeEvent {}
 
 class SettingsLoadEvent extends HomeEvent {}
-class SettingsThemeChangeEvent extends HomeEvent {}
 class SettingsChangeWeightEvent extends HomeEvent {}
