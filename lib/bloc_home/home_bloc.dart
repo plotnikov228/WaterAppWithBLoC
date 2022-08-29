@@ -1,12 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:water/Additionally/Colors.dart';
-import 'package:water/Additionally/Weight.dart';
-import 'package:water/BLoC%20Home/Home%20event.dart';
-import 'package:water/BLoC%20Home/Home%20state.dart';
+import 'package:water/additionally/weight.dart';
+import 'package:water/bloc_home/home_event.dart';
+import 'package:water/bloc_home/home_state.dart';
 
-import '../Additionally/Date.dart';
-import '../Additionally/WaterList.dart';
+
+import '../additionally/date.dart';
+import '../additionally/water_list.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc(initialState) : super(WaterScreenState()) {

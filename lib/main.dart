@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:water/screens/Home.dart';
+import 'package:water/screens/home.dart';
 
 
 void main() async {

@@ -2,24 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
-import '../Additionally/Colors.dart';
+import '../additionally/colors.dart';
 
 class WavesBackground extends StatelessWidget {
   final Duration duration;
-  static const _updateDuration = Duration(milliseconds: 600);
-
   WavesBackground({
+
     Key? key,
     this.duration = const Duration(seconds: 10),
   }) : super(key: key);
-  final Color _firstGradient = ColorsForApp.objectColor;
-  final Color _secondGradient = ColorsForApp.secondObjectColor;
+  ColorsForApp colorsForApp = ColorsForApp();
 
   @override
   Widget build(BuildContext context) {
     return WaveWidget(
       config: CustomConfig(
-        gradients: [[_secondGradient, _firstGradient]],
+        gradients: [[colorsForApp.objectColor, colorsForApp.secondObjectColor]],
         durations: [10000],
         heightPercentages: [0.0],
         blur: const MaskFilter.blur(BlurStyle.solid, 10),

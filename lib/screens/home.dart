@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:water/screens/WaterScreen%20and%20SettingsScreen.dart';
-import 'package:water/widgets/MainButton.dart';
+import 'package:water/screens/water_screen_and_settings_screen.dart';
+import 'package:water/widgets/main_button.dart';
 
-import '../BLoC Home/Home bloc.dart';
-import '../BLoC Home/Home event.dart';
-import '../BLoC Home/Home state.dart';
+import '../bloc_home/home_bloc.dart';
+import '../bloc_home/home_event.dart';
+import '../bloc_home/home_state.dart';
+
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);

@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:water/Additionally/Colors.dart';
-import 'package:water/Additionally/Weight.dart';
+import 'package:water/additionally/colors.dart';
+import 'package:water/additionally/weight.dart';
 
-import '../BLoC Home/Home bloc.dart';
-import '../BLoC Home/Home event.dart';
-import '../BLoC Home/Home state.dart';
+import '../bloc_home/home_bloc.dart';
+import '../bloc_home/home_event.dart';
+import '../bloc_home/home_state.dart';
 
 class Settings extends StatelessWidget {
   const Settings({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ColorsForApp colorsForApp = ColorsForApp();
     final HomeBloc settingsBloc = context.read<HomeBloc>();
     settingsBloc.add(SettingsLoadEvent());
     return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
       return Scaffold(
-        backgroundColor: ColorsForApp.backgroundColor,
+        backgroundColor: colorsForApp.backgroundColor,
         appBar: AppBar(
           title: Text('Настройки',
-              style: TextStyle(color: ColorsForApp.objectColor)),
-          backgroundColor: ColorsForApp.appbarBackgroundColor,
+              style: TextStyle(color: colorsForApp.objectColor)),
+          backgroundColor: colorsForApp.appbarBackgroundColor,
         ),
         body: Column(
           children: [
@@ -34,7 +35,7 @@ class Settings extends StatelessWidget {
                       children: [
                         Text('Ваш вес',
                             style: TextStyle(
-                                color: ColorsForApp.objectColor, fontSize: 15)),
+                                color: colorsForApp.objectColor, fontSize: 15)),
                         const Text(
                             'Колличество воды необходимое для питья расчитывается по формуле =',
                             style: TextStyle(color: Colors.grey, fontSize: 7)),
@@ -44,8 +45,8 @@ class Settings extends StatelessWidget {
                     ),
                     DropdownButton<int>(
                       value: Weight.selectedWeight,
-                      style: TextStyle(color: ColorsForApp.objectColor),
-                      dropdownColor: ColorsForApp.appbarBackgroundColor,
+                      style: TextStyle(color: colorsForApp.objectColor),
+                      dropdownColor: colorsForApp.appbarBackgroundColor,
                       items: Weight.weightList
                           .map<DropdownMenuItem<int>>((int value) {
                         return DropdownMenuItem<int>(
