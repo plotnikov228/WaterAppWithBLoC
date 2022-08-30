@@ -1,18 +1,18 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WaterList {
-  static double waterSlot = 0.2;
-  static String waterSlotStr = '0.2';
-  static List<String> waterSlots = [];
-  static double sum = 0;
-  static double maxWater = 0;
-  static int numberOfCells = 4;
-  static String appbarWater = 'appbar';
+  double waterSlot = 0.2;
+  String waterSlotStr = '0.2';
+  List<String> waterSlots = [];
+  double sum = 0;
+  double maxWater = 0;
+  int numberOfCells = 4;
+  String appbarWater = 'appbar';
 
-  static void calculateAppbar() {
+  void calculateAppbar() {
     sum = 0;
     maxWater = 0;
-    for (int i = 0; i < WaterList.waterSlots.length; i++) {
+    for (int i = 0; i < waterSlots.length; i++) {
       sum = sum + waterSlot;
     }
     for (int i = 0; i < numberOfCells; i++) {
@@ -28,7 +28,7 @@ class WaterList {
     }
   }
 
-  static void fillingList() {
+  void fillingList() {
     if (waterSlots.isNotEmpty) {
       waterSlots = [];
     }
@@ -39,7 +39,7 @@ class WaterList {
     incrementWater();
   }
 
-  static void fixingSum() {
+  void fixingSum() {
     if (sum == 0.2000000000000007) sum = 0.2;
     if (sum == 0.19999999999999996) sum = 0.2;
     if (sum == 0.39999999999999997) sum = 0.4;
@@ -55,7 +55,7 @@ class WaterList {
     if (sum == 2.1999999999999997) sum = 2.2;
   }
 
-  static void fixingMaxWater() {
+  void fixingMaxWater() {
     if (maxWater == 0.2000000000000007) maxWater = 0.2;
     if (maxWater == 0.19999999999999996) maxWater = 0.2;
     if (maxWater == 0.39999999999999997) maxWater = 0.4;
@@ -70,7 +70,7 @@ class WaterList {
     if (maxWater == 2.1999999999999997) maxWater = 2.2;
   }
 
-  static void cells(int weight) {
+  void cells(int weight) {
     double liters;
     numberOfCells = 0;
     liters = 1.5 + ((weight - 20.0) * 0.02);
@@ -80,13 +80,13 @@ class WaterList {
     }
   }
 
-  static void incrementWater() async {
+  void incrementWater() async {
     final prefs = await SharedPreferences.getInstance();
-    WaterList.waterSlots =
-        (prefs.setStringList('slot', WaterList.waterSlots)) as List<String>;
+    waterSlots =
+        (prefs.setStringList('slot', waterSlots)) as List<String>;
   }
 
-  static void readWater() async {
+  void readWater() async {
     final prefs = await SharedPreferences.getInstance();
     waterSlots = (prefs.getStringList('slot'))!;
   }

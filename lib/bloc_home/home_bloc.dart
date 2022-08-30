@@ -8,62 +8,59 @@ import '../additionally/date.dart';
 import '../additionally/water_list.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc(initialState) : super(WaterScreenState()) {
+  final WaterList waterList;
+  final Weight weight;
+  HomeBloc({required this.waterList, required this.weight}) : super(WaterScreenState(waterList: waterList, weight:  weight)) {
     int currentTab = 1;
     Date date = Date();
 
-    ///
-
-
-    ///
-
     on<WaterScreenAddEvent>((event, emit) async {
-      Weight.readWeight();
-      WaterList.cells(Weight.selectedWeight);
-      WaterList.fillingList();
-      WaterList.calculateAppbar();
+      weight.readWeight();
+      waterList.cells(weight.selectedWeight);
+      waterList.fillingList();
+      waterList.calculateAppbar();
       date.incrementDay();
-      WaterList.appbarWater =
-      'Осталось выпить = ${WaterList.sum} / ${WaterList.maxWater}';
+      waterList.appbarWater =
+      'Осталось выпить = ${waterList.sum} / ${waterList.maxWater}';
     });
 
     on<WaterScreenLoadEvent>((event, emit) async {
-      WaterList.cells(Weight.selectedWeight);
-      WaterList.readWater();
-      WaterList.calculateAppbar();
-      emit(WaterScreenState());
+      waterList.cells(weight.selectedWeight);
+      waterList.readWater();
+      waterList.calculateAppbar();
+      emit(WaterScreenState(waterList: waterList, weight: weight));
     });
 
     on<WaterScreenDeleteEvent>((event, emit) async {
-      WaterList.waterSlots.removeLast();
-      WaterList.sum = WaterList.sum - WaterList.waterSlot;
-      WaterList.fixingSum();
-      WaterList.waterSlots.isNotEmpty
-          ? WaterList.appbarWater =
-              'Осталось выпить = ${WaterList.sum} / ${WaterList.maxWater}'
-          : WaterList.appbarWater = 'Вы всё выпили!';
-      WaterList.incrementWater();
-      emit(WaterScreenState());
+      waterList.waterSlots.removeLast();
+      waterList.sum = waterList.sum - waterList.waterSlot;
+      waterList.fixingSum();
+      waterList.waterSlots.isNotEmpty
+          ? waterList.appbarWater =
+              'Осталось выпить = ${waterList.sum} / ${waterList.maxWater}'
+          : waterList.appbarWater = 'Вы всё выпили!';
+      waterList.incrementWater();
+      emit(WaterScreenState(waterList: waterList, weight: weight));
     });
 
     ///
 
     on<SettingsLoadEvent>((event, emit) async {
-      Weight.readWeight();
-      emit(SettingsScreenState());
+      weight.readWeight();
+      emit(SettingsScreenState(weight: weight));
     });
 
     on<SettingsChangeWeightEvent>((event, emit) async {
-      Weight.incrementWeight();
-      emit(SettingsScreenState());
+      weight.incrementWeight();
+      emit(SettingsScreenState(weight: weight));
     });
 
     ///
 
     on<ChangeScreenEvent>((event, emit) async {
       currentTab == 1
-          ? {emit(SettingsScreenState()), currentTab = 2}
-          : {emit(WaterScreenState()), currentTab = 1};
+          ? {emit(SettingsScreenState(weight: weight)), currentTab = 2}
+          : {emit(WaterScreenState(waterList: waterList, weight: weight)), currentTab = 1};
     });
   }
 }
