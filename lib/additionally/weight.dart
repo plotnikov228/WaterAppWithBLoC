@@ -5,10 +5,9 @@ class Weight {
   int selectedWeight = 50;
 
   void incrementWeight() async {
-
     final prefs = await SharedPreferences.getInstance();
-    selectedWeight =
-    (prefs.setInt('weight', selectedWeight)) as int;
+    await prefs.setInt('weight', selectedWeight);
+    selectedWeight = (prefs.getInt('weight'))!;
   }
 
   void readWeight() async {

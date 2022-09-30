@@ -1,15 +1,18 @@
-import 'package:water/additionally/weight.dart';
 
-import '../additionally/water_list.dart';
+import 'package:water/additionally/date.dart';
+import 'package:water/additionally/water_list.dart';
+
+import '../additionally/weight.dart';
 
 abstract class HomeState{}
 
 class WaterScreenState extends HomeState{
   WaterList waterList = WaterList();
-  Weight weight = Weight();
-  WaterScreenState({required this.waterList, required this.weight});
+  WaterAppBar waterAppBar = WaterAppBar();
+  Date date = Date();
+  WaterScreenState({required this.waterList, required this.waterAppBar, required this.date});
 }
-class WaterScreenEmptyState extends HomeState{}
+
 class SettingsScreenState extends HomeState{
   Weight weight = Weight();
   SettingsScreenState({required this.weight});

@@ -7,17 +7,15 @@ import '../bloc_home/home_event.dart';
 import '../bloc_home/home_state.dart';
 
 class Settings extends StatelessWidget {
-  final HomeState state;
-
-  const Settings({Key? key, required this.state}) : super(key: key);
+  const Settings({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    ColorsForApp colorsForApp = ColorsForApp();
+    final ColorsForApp colorsForApp = ColorsForApp();
     final HomeBloc settingsBloc = context.read<HomeBloc>();
     settingsBloc.add(SettingsLoadEvent());
     return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
-      if(state is SettingsScreenState) {
+      if (state is SettingsScreenState) {
         return Scaffold(
           backgroundColor: colorsForApp.backgroundColor,
           appBar: AppBar(
@@ -41,11 +39,11 @@ class Settings extends StatelessWidget {
                                   fontSize: 15)),
                           const Text(
                               'Колличество воды необходимое для питья расчитывается по формуле =',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 7)),
+                              style: TextStyle(
+                                  color: Colors.grey, fontSize: 7)),
                           const Text('1500 мл + ((вес) - 20 кг) * 20 мл)',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 7)),
+                              style: TextStyle(
+                                  color: Colors.grey, fontSize: 7)),
                         ],
                       ),
                       DropdownButton<int>(
@@ -60,11 +58,10 @@ class Settings extends StatelessWidget {
                           );
                         }).toList(),
                         onChanged: (int? newWeight) {
-                          if (state.weight.selectedWeight == newWeight) {
-                          } else {
+                          if (state.weight.selectedWeight == newWeight) {} else {
                             state.weight.selectedWeight = newWeight!;
-                            settingsBloc.add(SettingsChangeWeightEvent());
                             settingsBloc.add(WaterScreenAddEvent());
+                            settingsBloc.add(SettingsChangeWeightEvent());
                           }
                         },
                       )
@@ -73,7 +70,7 @@ class Settings extends StatelessWidget {
             ],
           ),
         );
-      } else return Container();
-    });
+      }else return Container();
+      });
   }
 }

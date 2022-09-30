@@ -2,14 +2,47 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class WaterList {
   double waterSlot = 0.2;
-  String waterSlotStr = '0.2';
-  List<String> waterSlots = [];
+  List<String> waterSlots = <String>[];
+  int numberOfCells = 4;
+
+  void fillingList() {
+    if (waterSlots.isNotEmpty) {
+      waterSlots = [];
+    }
+    for (int i = 0; i < numberOfCells; i++) {
+      waterSlots.add(waterSlot.toString());
+    }
+    incrementWater();
+  }
+
+  void cells(int weight) {
+    double liters;
+    numberOfCells = 0;
+    liters = 1.5 + ((weight - 20.0) * 0.02);
+    while (liters >= waterSlot) {
+      liters = liters - waterSlot;
+      numberOfCells++;
+    }
+  }
+
+  void incrementWater() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setStringList('slot', waterSlots);
+    waterSlots = (prefs.getStringList('slot'))!;
+  }
+
+  void readWater() async {
+    final prefs = await SharedPreferences.getInstance();
+    waterSlots = (prefs.getStringList('slot'))!;
+  }
+}
+
+class WaterAppBar {
   double sum = 0;
   double maxWater = 0;
-  int numberOfCells = 4;
-  String appbarWater = 'appbar';
+  String appbarWater = '';
 
-  void calculateAppbar() {
+  void calculateAppbar(List waterSlots, double waterSlot, int numberOfCells) {
     sum = 0;
     maxWater = 0;
     for (int i = 0; i < waterSlots.length; i++) {
@@ -22,21 +55,10 @@ class WaterList {
     fixingMaxWater();
     if (sum != 0) {
       appbarWater =
-          'Осталось выпить = $sum / $maxWater';
+      'Осталось выпить = $sum / $maxWater';
     } else {
       appbarWater = 'Вы всё выпили!';
     }
-  }
-
-  void fillingList() {
-    if (waterSlots.isNotEmpty) {
-      waterSlots = [];
-    }
-    for (int i = 0; i < numberOfCells; i++) {
-      waterSlots.add(waterSlotStr);
-    }
-
-    incrementWater();
   }
 
   void fixingSum() {
@@ -68,26 +90,5 @@ class WaterList {
     if (maxWater == 1.7999999999999998) maxWater = 1.8;
     if (maxWater == 1.9999999999999998) maxWater = 2;
     if (maxWater == 2.1999999999999997) maxWater = 2.2;
-  }
-
-  void cells(int weight) {
-    double liters;
-    numberOfCells = 0;
-    liters = 1.5 + ((weight - 20.0) * 0.02);
-    while (liters >= waterSlot) {
-      liters = liters - waterSlot;
-      numberOfCells++;
-    }
-  }
-
-  void incrementWater() async {
-    final prefs = await SharedPreferences.getInstance();
-    waterSlots =
-        (prefs.setStringList('slot', waterSlots)) as List<String>;
-  }
-
-  void readWater() async {
-    final prefs = await SharedPreferences.getInstance();
-    waterSlots = (prefs.getStringList('slot'))!;
   }
 }

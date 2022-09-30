@@ -1,6 +1,7 @@
 abstract class HomeEvent {}
 
 class ChangeScreenEvent extends HomeEvent{}
+class AppOpenEvent extends HomeEvent{}
 
 class WaterScreenLoadEvent extends HomeEvent {}
 class WaterScreenRefreshEvent extends HomeEvent {}

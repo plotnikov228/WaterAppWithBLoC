@@ -6,7 +6,8 @@ class Date {
 
   void incrementDay() async {
     final prefs = await SharedPreferences.getInstance();
-    day = (prefs.setInt('day', now.day) as int);
+    await prefs.setInt('day', now.day);
+    day = (prefs.getInt('day'))!;
   }
 
   void readDay() async {
